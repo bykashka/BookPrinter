@@ -54,7 +54,7 @@ class Book_printer(wx.Frame):
         wildcard='*.ps')
         if dlg.ShowModal() == wx.ID_OK:
             self.filename = dlg.GetPath()
-            self.select.SetLabel('Выбрать: ' + self.filename)
+            self.select.SetLabel(u'Выбрано: ' + os.path.split(self.filename)[-1])
         dlg.Destroy()
 
     def OnExit(self, event):
@@ -177,6 +177,6 @@ class Book_printer(wx.Frame):
 if __name__ == '__main__':
     app = wx.App()
     #app.Yield(onlyIfNeeded=True)
-    frame = Book_printer(parent = None, id = -1)
+    frame = Book_printer(parent=None, id=-1)
     frame.Show()
     app.MainLoop()

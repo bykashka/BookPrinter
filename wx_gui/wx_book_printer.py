@@ -42,9 +42,7 @@ class Book_printer(wx.Frame):
         self.Bind(wx.EVT_MENU, self.OnAbout, about)
         self.Bind(wx.EVT_CHECKBOX, self.OnCheck, self.border)
         self.Bind(wx.EVT_BUTTON, self.OnPrint, self.btn_print)
-##        self.Bind(wx.EVT_IDLE, self.SowGauge)
-
-
+        #self.Bind(wx.EVT_IDLE, self.SowGauge)
 
         self.select = wx.StaticText(self.panel, -1, 'Выбор:', (10, 10), (150, 20))
 
@@ -78,9 +76,8 @@ class Book_printer(wx.Frame):
         book_path, book_name = os.path.split(path_to_book_old)
         self.path_to_book = os.path.join(book_path, 'resize_' + book_name)
 
-        
         #self.st_progress.SetLabel('Proces is begin, please wait some time...')
-        #If set resize border
+        #If resize border is set
         if self.border:
             os.spawnv(os.P_WAIT, '/usr/bin/psnup', 
             ['/usr/bin/psnup', 
@@ -95,7 +92,7 @@ class Book_printer(wx.Frame):
         dir_name = os.path.splitext(os.path.basename(self.path_to_book))[0]
         self.work_dir = os.path.join(os.getcwd(), dir_name)
         if not os.path.exists(self.work_dir):
-			os.mkdir(self.work_dir)
+        os.mkdir(self.work_dir)
 
         # Set new working directory
         os.chdir(self.work_dir)
@@ -128,7 +125,6 @@ class Book_printer(wx.Frame):
         for i in byklets:
             output_file = os.path.join(self.work_dir, str(i[0]) + '_' + str(i[1])+ ".ps")
             all_output_files.append(output_file)
-##    
             os.spawnv(os.P_WAIT, '/usr/bin/psselect',
                     ['/usr/bin/psselect',
                     '-p',
@@ -141,16 +137,13 @@ class Book_printer(wx.Frame):
             f_name = os.path.basename(in_file)
             output_file = os.path.join(
                 os.path.split(in_file)[0], 'byklet_' + f_name)
-##    
             all_byklet_files.append(output_file)
-##    
             os.spawnv(os.P_WAIT, '/usr/bin/psbook',
                     ['/usr/bin/psbook',
                     in_file,
                     output_file,])
 
         # 1 list format A4 -> 2 lists format A5
-
         for in_byklet_file in all_byklet_files:
             f_name = os.path.basename(in_byklet_file)
             output_file_rez = os.path.join(
@@ -162,9 +155,8 @@ class Book_printer(wx.Frame):
                     '-2',
                     in_byklet_file,
                     output_file_rez,])
-                    
 
-        # Delay others files
+        # Delete others files
         for p in all_output_files:
             os.remove(p)
             #print ".",
@@ -180,3 +172,6 @@ if __name__ == '__main__':
     frame = Book_printer(parent=None, id=-1)
     frame.Show()
     app.MainLoop()
+    # TODO - find book about wxPython and make GUI for current program more comfortable.
+    # TODO - make CLI for current programm.
+    # TODO - rewrite current program using OOP.

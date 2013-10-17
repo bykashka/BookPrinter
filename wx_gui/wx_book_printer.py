@@ -7,7 +7,7 @@ import time
 class Book_printer(wx.Frame):
     def __init__(self, parent, id):
         wx.Frame.__init__(self, parent, id,
-        'Печать книги', size=(230, 200))
+        'Печать книги', size=(230, 200), style=wx.DEFAULT_FRAME_STYLE ^ wx.RESIZE_BORDER)
 
         self.panel = wx.Panel(self)
 
@@ -92,7 +92,7 @@ class Book_printer(wx.Frame):
         dir_name = os.path.splitext(os.path.basename(self.path_to_book))[0]
         self.work_dir = os.path.join(os.getcwd(), dir_name)
         if not os.path.exists(self.work_dir):
-        os.mkdir(self.work_dir)
+            os.mkdir(self.work_dir)
 
         # Set new working directory
         os.chdir(self.work_dir)
